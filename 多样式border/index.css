@@ -1,0 +1,153 @@
+* {
+  padding: 0;
+  margin: 0;
+}
+body {
+  height: 100vh;
+  background-color: #f5f5d5;
+}
+.container {
+  /* display: flex;
+  flex-flow: column nowrap;
+  justify-content: space-around;
+  align-items: center; */
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-template-rows: 200px;
+  grid-auto-rows: 200px;
+  align-content: center;
+  height: 100%;
+  padding: 20px 20px;
+  align-items: center;
+  justify-items: center;
+
+}
+/* 主要是为设置背景颜色的一个容器 */
+.grid-box {
+  /* width: 100%;
+  height: 100%; */
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+  background-color: #fff;
+}
+
+/* 通过background模仿渐变的dashed border动画 */
+.dashed-box {
+  width: 200px;
+  height: 60px;
+  border: 1px dashed #333;
+  cursor: pointer;
+
+  /* 通过background来设置边框 */
+  /* background: linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+              linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+              linear-gradient(0deg, #333 50%, transparent 0) repeat-y,
+              linear-gradient(0deg, #333 50%, transparent 0) repeat-y;
+  background-size: 4px 1px, 4px 1px, 1px 4px, 1px 4px;
+  background-position: 0 0, 0 100%, 0 0, 100% 0; */
+
+  /* 由实线转为虚线 */
+  outline: 1px solid #333;
+  outline-offset: -1px;
+}
+
+/* 添加hover动画 改变 background-position */
+.dashed-box:hover {
+  animation: linearGradientMove .1s linear 0s infinite;
+  /* 由实线转为虚线 border会有错位效果 使用outline*/
+  /*
+    outline （轮廓）是绘制于元素周围的一条线，位于边框边缘的外围，可起到突出元素的作用。
+    注释：轮廓线不会占据空间，也不一定是矩形
+  */
+  outline: none;
+
+  background: linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+              linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+              linear-gradient(0deg, #333 50%, transparent 0) repeat-y,
+              linear-gradient(0deg, #333 50%, transparent 0) repeat-y;
+  background-size: 4px 1px, 4px 1px, 1px 4px, 1px 4px;
+  background-position: 0 0, 0 100%, 0 0, 100% 0;
+}
+@keyframes linearGradientMove{
+  100% { background-position: 4px 0, -4px 100%, 0 -4px, 100% 4px; }
+}
+
+
+
+/* 旋转背景 */
+.linear-box {
+  position: relative;
+  width: 200px;
+  height: 120px;
+  overflow: hidden;
+  border-radius: 15px;
+}
+
+.linear-box:after {
+  content: '';
+  position: absolute;
+  left: -50%;
+  top: -50%;
+  width: 200%;
+  height: 200%;
+  /* 设置伪元素的背景颜色 */
+  background: linear-gradient(#399953 0%, #399953 100%),
+              linear-gradient(#fbb300, #fbb300),
+              linear-gradient(#d53e33, #d53e33),
+              linear-gradient(#377af5, #377af5);
+  /* background-position: 0 0, 200px 0, 200px 120px, 0 120px; */
+  background-position: 0 0, 100% 0, 100% 100%, 0 100%;
+  background-size: 50% 50%, 50% 50%, 50% 50%, 50% 50%;
+  background-repeat: no-repeat;
+  /* 添加旋转动画 */
+  animation: roate 3s linear infinite ;
+}
+
+@keyframes roate {
+  100% {transform: rotate(360deg);}
+}
+
+
+/* 旋转边框的遮罩层 */
+.border::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  /* width: calc(100% - 3px);
+  height: calc(100% - 3px); */
+  background: #fff;
+  border-radius: 15px;
+  z-index: 100;
+}
+
+/* 单颜色旋转 */
+
+.border-green::after {
+  background: linear-gradient(#399953, #399953);
+  background-size: 50% 50%;
+  background-position: 0 0;
+  background-repeat: no-repeat;
+}
+.border-green::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  right: 3px;
+  bottom: 3px;
+  background: #fff;
+  border-radius: 15px;
+  z-index: 100;
+  animation: backOpacity 3s linear infinite alternate;
+}
+/* 遮罩层的透明度渐变 */
+@keyframes backOpacity {
+  0% {opacity: 1}
+  50% {opacity: .5}
+}
